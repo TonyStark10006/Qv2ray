@@ -119,8 +119,8 @@ void OutboundEditor::reloadGUI()
     streamSettingsWidget->SetStreamObject(StreamSettingsObject::fromJson(originalConfig["streamSettings"].toObject()));
     //
     useFPCB->setChecked(useForwardProxy);
-    muxEnabledCB->setChecked(muxConfig["enabled"].toBool());
-    muxConcurrencyTxt->setValue(muxConfig["concurrency"].toInt());
+    muxEnabledCB->setChecked(true);
+    muxConcurrencyTxt->setValue(muxConfig["concurrency"].toInt() != 0 ? muxConfig["concurrency"].toInt() : 8);
     //
     const auto &settings = originalConfig["settings"].toObject();
     //

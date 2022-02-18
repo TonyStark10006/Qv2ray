@@ -55,7 +55,25 @@ namespace Qv2ray::core::connection::generation::outbounds
                                    const QJsonObject &mux, const QString &sendThrough)
     {
         OUTBOUND root;
-        JADD(sendThrough, protocol, settings, tag, streamSettings, mux)
+        // JADD(sendThrough, protocol, settings, tag, streamSettings, mux)
+
+        QJsonObject cmux = QJsonObject{};
+        cmux["enabled"] = true;
+        cmux["concurrency"] = mux["concurrency"].toInt() != 0 ? mux["concurrency"].toInt() : 8;
+        // mux["enabled"] = true;
+        // mux["concurrency"] = mux["concurrency"].toInt() != 0 ? mux["concurrency"].toInt() : 8;
+
+        // if (streamSettings.contains("sockopt")) {
+        //     streamSettings["sockopt"]["tcpFastOpen"] = true;
+        //     streamSettings["sockopt"]["tcpFastOpenQueueLength"] = 4096;
+        // } else {
+        //     QJsonObject sockopt = QJsonObject{};
+        //     sockopt["tcpFastOpen"] = true;
+        //     sockopt["tcpFastOpenQueueLength"] = 4096;
+        //     streamSettings.add(sockopt);
+        // }
+
+        JADD(sendThrough, protocol, settings, tag, streamSettings, cmux);
         return root;
     }
 } // namespace Qv2ray::core::connection::generation::outbounds
